@@ -22,11 +22,13 @@ public class DeliveryManager : MonoBehaviour {
 
     private List<RecipeSO> waitingRecipeSOList;
     private float spawnRecipeTimer;
+    private int successfulRecipesAmount;
 
     private void Awake() {
         Instance = this;
         waitingRecipeSOList = new List<RecipeSO>();
         spawnRecipeTimer = 0f;
+        successfulRecipesAmount = 0;
     }
 
     private void Update() {
@@ -70,6 +72,8 @@ public class DeliveryManager : MonoBehaviour {
 
                     OnRecipeCompleted?.Invoke(this, EventArgs.Empty);
                     OnRecipeSuccess?.Invoke(this, EventArgs.Empty);
+
+                    successfulRecipesAmount++;
                     return;
                 }
             }
@@ -82,5 +86,9 @@ public class DeliveryManager : MonoBehaviour {
 
     public List<RecipeSO> GetWaitingRecipeSOList() {
         return waitingRecipeSOList;
+    }
+
+    public int GetSuccessfulRecipesAmount() {
+        return successfulRecipesAmount;
     }
 }
