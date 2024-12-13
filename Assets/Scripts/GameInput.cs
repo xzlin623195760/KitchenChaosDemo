@@ -15,6 +15,8 @@ public class GameInput : MonoBehaviour {
 
     public event EventHandler OnPauseAction;
 
+    public event EventHandler OnBindingRebindAction;
+
     public enum Binding {
         Move_Up,
         Move_Down,
@@ -171,6 +173,9 @@ public class GameInput : MonoBehaviour {
 
             // 存储玩家修改键位后的数据
             PlayerPrefs.SetString(PLAYER_PREFES_BINDINGS, playerInputActions.SaveBindingOverridesAsJson());
+            PlayerPrefs.Save();
+
+            OnBindingRebindAction?.Invoke(this, EventArgs.Empty);
         })
         .Start();
     }

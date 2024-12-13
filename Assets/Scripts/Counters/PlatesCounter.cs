@@ -17,12 +17,14 @@ public class PlatesCounter : BaseCounter {
     private int platesSpawnAmountMax = 4;
 
     private void Update() {
-        spawnPlateTimer += Time.deltaTime;
-        if (spawnPlateTimer >= spawnPlateTimerMax && platesSpawnAmount < platesSpawnAmountMax) {
-            spawnPlateTimer = 0;
-            platesSpawnAmount++;
-            OnPlateSpawned?.Invoke(this, EventArgs.Empty);
-            //KitchenObject.SpwanKitchenObject(plateKitchenObjectSO, this);
+        if (KitchenGameManager.Instance.IsGamePlaying() && platesSpawnAmount < platesSpawnAmountMax) {
+            spawnPlateTimer += Time.deltaTime;
+            if (spawnPlateTimer >= spawnPlateTimerMax) {
+                spawnPlateTimer = 0;
+                platesSpawnAmount++;
+                OnPlateSpawned?.Invoke(this, EventArgs.Empty);
+                //KitchenObject.SpwanKitchenObject(plateKitchenObjectSO, this);
+            }
         }
     }
 
